@@ -44,9 +44,28 @@ class ImageController extends Controller
         if (request()->hasFile('image')) {
             $file = request()->file('image');
             $extension =$file->getClientOriginalExtension();
-            $fileName = $file->store('image', ['disk' => 'uploads']);
-            $img->path = $fileName;
         }
+
+
+
+        if($request->hasFile('image'))
+        {
+            $files = $request->file('image');
+            foreach ($files as $file) {
+                $file->store('users/' . $this->user->id . '/messages');
+
+
+                $fileName = $file->store('image', ['disk' => 'uploads']);
+                $img->path = $fileName;
+            }
+        }
+
+
+
+
+
+
+
         
         $img->save();
         return redirect()->route('image.index')->with(['success' => 'Image added successfully.']);

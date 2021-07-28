@@ -21,7 +21,7 @@
     <div class="card">
       <div class="card-body">
       <h4 class="card-title"> Edit Gallery </h4>
-      {{ Form::open(['route' => ['gallery.update', $gallery->id],  'method' => 'POST']) }}
+      {{ Form::open(['route' => ['gallery.update', $gallery->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
         @csrf
         @method('PATCH')
           <div class="form-group">
@@ -40,6 +40,14 @@
 
             @if($errors->first('description'))
               <span class="form-error">{{$errors->first('description')}}</span>
+            @endif
+          </div>
+          <div class="form-group">
+            {!! Form::label('title', 'Image',['class' => 'control-label']) !!}
+            {{ Form::file('image[]', ['class' => 'control-label', 'multiple' => 'multiple']) }}
+
+            @if($errors->first('image'))
+              <span class="form-error">{{$errors->first('image')}}</span>
             @endif
           </div>
 

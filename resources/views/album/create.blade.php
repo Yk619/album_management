@@ -21,7 +21,7 @@
     <div class="card">
       <div class="card-body">
       <h4 class="card-title"> Add Gallery </h4>       
-        {!! Form::open(array('route' => 'gallery.store')) !!}
+        {!! Form::open(array('route' => 'gallery.store', 'enctype' => 'multipart/form-data')) !!}
           <div class="form-group">
             {!! Form::label('title', 'Title',['class' => 'control-label']) !!}
             {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -39,6 +39,15 @@
             @endif
           </div>
 
+          <div class="form-group">
+            {!! Form::label('title', 'Image',['class' => 'control-label']) !!}
+            {{ Form::file('image[]', ['class' => 'control-label', 'multiple' => 'multiple']) }}
+
+            @if($errors->first('image'))
+              <span class="form-error">{{$errors->first('image')}}</span>
+            @endif
+          </div>
+
           {!! Form::submit('Submit', ['class' => 'btn btn-primary mr-2']) !!}
           {!! Form::close() !!}
       </div>
@@ -46,5 +55,4 @@
   </div>
  
 </div>
-
 @endsection

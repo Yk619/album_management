@@ -45,7 +45,7 @@
           </div>
           <div class="form-group">
             {!! Form::label('title', 'Image',['class' => 'control-label']) !!}
-            {{ Form::file('image') }}
+            {{ Form::file('image[]', ['class' => 'control-label', 'multiple' => 'multiple']) }}
 
             @if($errors->first('image'))
               <span class="form-error">{{$errors->first('image')}}</span>

@@ -26,5 +26,5 @@ Route::group(['middleware' => 'auth', 'prefix' => '/'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::resource('gallery', 'AlbumController');
-    Route::resource('image', 'ImageController');
+    Route::get('delete/image/{img_id}', 'AlbumController@deleteImage')->name('delete.image');
 });

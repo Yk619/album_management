@@ -51,7 +51,8 @@
                 <td>{{$gallery->title}}</td>
                 <td>{{$gallery->image->count()}}</td>
                 <td>
-                  <a class="badge badge-info" href="{{route('gallery.edit', $gallery->id)}}"><i class="mdi mdi-pencil"></i></a>
+                  <a class="badge badge-primary" href="{{route('gallery.show', $gallery->id)}}"><i class="mdi mdi-eye"></i></a>
+                  <a class="badge badge-primary" href="{{route('gallery.edit', $gallery->id)}}"><i class="mdi mdi-pencil"></i></a>
 
                   {{ Form::open(['route' => ['gallery.destroy', $gallery->id],  'method' => 'POST']) }}
                   @csrf  

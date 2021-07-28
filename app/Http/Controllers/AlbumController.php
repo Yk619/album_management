@@ -42,29 +42,46 @@ class AlbumController extends Controller
             $gallery[$key] = $value;
         }
         $gallery->save();
+        if($request->hasFile('image'))
+        {
+            $images = array();
+            $files = $request->file('image');
+            foreach ($files as $file) {
+                $fileName = $file->store('image', ['disk' => 'uploads']);
+
+                $images[] = [
+                    'album_id' => $gallery->id,
+                    'path' => $fileName,
+                ];
+            }
+        Image::insert($images);
+        }
+
         return redirect()->route('gallery.index')->with(['success' => 'Gallery added successfully.']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tobo  $tobo
+     * @param  \App\Models\album  $album
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show($album_id)
     {
-        //
+        $gallery = Album::with('image')->where('id', $album_id)->firstOrFail();  
+        return view('album.show')->with(['gallery' => $gallery]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tobo  $tobo
+     * @param  \App\Models\album  $album
      * @return \Illuminate\Http\Response
      */
     public function edit($album_id)
     {
-        $gallery = Album::find($album_id);  
+        $gallery = Album::find($album_id);
+        //dd($gallery->toArray()); 
         return view('album.edit', compact('gallery'));  
     }
 
@@ -72,7 +89,7 @@ class AlbumController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tobo  $tobo
+     * @param  \App\Models\album  $album
      * @return \Illuminate\Http\Response
      */
     public function update(AlbumRequest $request, $id)
@@ -81,13 +98,27 @@ class AlbumController extends Controller
         $gallery->title = $request->title;
         $gallery->description = $request->description;  
         $gallery->save();
+        if($request->hasFile('image'))
+        {
+            $images = array();
+            $files = $request->file('image');
+            foreach ($files as $file) {
+                $fileName = $file->store('image', ['disk' => 'uploads']);
+
+                $images[] = [
+                    'album_id' => $gallery->id,
+                    'path' => $fileName,
+                ];
+            }
+        Image::insert($images);
+        }
         return redirect()->route('gallery.index')->with(['success' => 'Gallery updated successfully.']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tobo  $tobo
+     * @param  \App\Models\album  $album
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -95,5 +126,18 @@ class AlbumController extends Controller
         $gallery = Album::find($id);
         $gallery->delete();
         return redirect()->route('gallery.index')->with(['success' => 'Gallery deleted successfully.']);
-    }  
+    }
+
+    /** Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage($img_id)
+    {
+        $img = Image::findOrFail($img_id);
+        $img->delete();
+        return redirect()->back()->with('success', 'Image deleted successfully!');
+        
+    }
 }

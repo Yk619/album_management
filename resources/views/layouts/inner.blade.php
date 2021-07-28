@@ -10,21 +10,21 @@
     <title>{{ config('app.name', 'Album') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('css/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('images/favicon.png') }}">
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
 
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
     <div class="container-scroller">
@@ -185,12 +185,6 @@
               <span class="menu-title">Gallery</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('image.index')}}">
-              <i class="mdi mdi-view-headline menu-icon"></i>
-              <span class="menu-title">Gallery Image</span>
-            </a>
-          </li>
         </ul>
       </nav>
       <!-- partial -->
@@ -209,14 +203,14 @@
     </div>
     <!-- page-body-wrapper ends -->
 </div>
-    <script src="{{ asset('js/base/vendor.bundle.base.js') }}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
+ @yield('script')
+    <script src="{{ asset('js/lightbox.min.js') }}"></script>
+    <script src="{{ asset('js/ekko-lightbox.js') }}"></script>
+    <!-- <script src="{{ asset('js/base/vendor.bundle.base.js') }}"></script>
     <script src="{{ asset('js/off-canvas.js') }}"></script>
     <script src="{{ asset('js/hoverable-collapse.js') }}"></script>
-    <script src="{{ asset('js/template.js') }}"></script>
+    <script src="{{ asset('js/template.js') }}"></script> -->
+ 
 <body>
 
 </html>

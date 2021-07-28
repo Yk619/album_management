@@ -21,9 +21,14 @@ class AlbumRequest extends FormRequest{
      */
     public function rules(){
         $id = $this->request->get('album_id');
-        return [
+        $rule = [
             'title' => 'required|min:3|max:50|unique:albums,title,'.$id,
             'description' => 'required',
         ];
+        if(!$id){
+            $rule['image'] = 'required';
+            $rule['image.*'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+        return $rule;
     }
 }
